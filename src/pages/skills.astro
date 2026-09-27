@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Skills from '../components/Skills.astro';
+import { personalInfo } from '../data/personalInfo';
+---
+
+<Layout
+  title={`Skills & Tooling — ${personalInfo.name} | Android Developer`}
+  description="Technical capabilities, Kotlin & Android ecosystem expertise, architecture patterns, APIs, and cloud toolsets."
+>
+  <div class="subpage-wrapper">
+    <Skills />
+  </div>
+</Layout>

@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Projects from '../components/Projects.astro';
+import { personalInfo } from '../data/personalInfo';
+---
+
+<Layout
+  title={`Projects — ${personalInfo.name} | Android Developer`}
+  description="Explore featured Android, Jetpack Compose, and Kotlin Multiplatform projects engineered by Akash Bhattacharya."
+>
+  <div class="subpage-wrapper">
+    <Projects />
+  </div>
+</Layout>

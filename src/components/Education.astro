@@ -1,0 +1,267 @@
+---
+import { educationData, certificationsList } from '../data/education';
+---
+
+<section id="education" class="education-section">
+  <div class="container">
+    <div class="section-header reveal-on-scroll">
+      <div class="section-label mono">// 04. ACADEMICS & CREDENTIALS</div>
+      <h2 class="section-title">
+        Education & <span class="gradient-text">Certifications</span>
+      </h2>
+      <p class="section-subtitle">
+        Formal academic training grounded in analytical commerce combined with intensive specialized mobile engineering certifications.
+      </p>
+    </div>
+
+    <div class="edu-grid">
+      <!-- Education Column -->
+      <div class="edu-column reveal-on-scroll">
+        <h3 class="column-heading mono">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+          <span>ACADEMIC DEGREE</span>
+        </h3>
+
+        <div class="edu-card glass-card">
+          <div class="card-top-row">
+            <span class="period-pill mono">{educationData.period}</span>
+            <span class="gpa-pill mono">{educationData.grade}</span>
+          </div>
+
+          <h4 class="degree-title">{educationData.degree}</h4>
+          
+          <div class="institution-row">
+            <span class="institution-name">{educationData.institution}</span>
+            <span class="location-text">• {educationData.location}</span>
+          </div>
+
+          <p class="edu-details">
+            {educationData.details}
+          </p>
+
+          <div class="edu-badge mono">
+            <span class="status-check">✓</span>
+            <span>VERIFIED DEGREE CREDENTIAL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certifications Column -->
+      <div class="certs-column reveal-on-scroll">
+        <h3 class="column-heading mono">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="7"></circle>
+            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+          </svg>
+          <span>PROFESSIONAL CERTIFICATIONS</span>
+        </h3>
+
+        <div class="certs-list">
+          {certificationsList.map((cert) => (
+            <div class="cert-card glass-card">
+              <div class="cert-header">
+                <span class="cert-badge mono">{cert.badge}</span>
+                <span class="cert-hours mono">{cert.duration}</span>
+              </div>
+              <h4 class="cert-title">{cert.title}</h4>
+              <div class="cert-instructor">
+                Instructor: <strong>{cert.instructor}</strong>
+              </div>
+              <p class="cert-focus">
+                {cert.platformOrFocus}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .education-section {
+    position: relative;
+  }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 36px;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 860px) {
+    .edu-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  .column-heading {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .edu-card {
+    padding: 30px;
+    border-radius: 16px;
+  }
+
+  @media (max-width: 480px) {
+    .edu-card {
+      padding: 20px 16px;
+    }
+  }
+
+  .card-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .period-pill {
+    font-size: 0.76rem;
+    color: var(--accent-violet-light);
+    background: var(--chip-bg);
+    border: 1px solid var(--chip-border);
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .gpa-pill {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--status-pill-text);
+    background: var(--status-pill-bg);
+    border: 1px solid var(--status-pill-border);
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .degree-title {
+    font-size: clamp(1.15rem, 4vw, 1.35rem);
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    word-break: break-word;
+  }
+
+  .institution-row {
+    font-size: 0.95rem;
+    color: var(--accent-cyan);
+    font-weight: 500;
+    margin-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .location-text {
+    color: var(--text-dim);
+  }
+
+  .edu-details {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .edu-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    padding-top: 14px;
+    border-top: 1px solid var(--divider-color);
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .status-check {
+    color: var(--accent-emerald);
+    font-weight: 700;
+  }
+
+  /* Certifications List */
+  .certs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .cert-card {
+    padding: 22px 24px;
+    border-radius: 14px;
+  }
+
+  @media (max-width: 480px) {
+    .cert-card {
+      padding: 16px 14px;
+    }
+  }
+
+  .cert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .cert-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--accent-violet-light);
+    letter-spacing: 0.08em;
+  }
+
+  .cert-hours {
+    font-size: 0.72rem;
+    color: var(--accent-cyan);
+    background: var(--badge-cyan-bg);
+    border: 1px solid var(--chip-cyan-border);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .cert-title {
+    font-size: clamp(1rem, 3.5vw, 1.08rem);
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 4px;
+    word-break: break-word;
+  }
+
+  .cert-instructor {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .cert-instructor strong {
+    color: var(--text-muted);
+  }
+
+  .cert-focus {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+</style>

@@ -1,0 +1,124 @@
+---
+// ThemeToggle.astro: Switch between Futuristic Dark & Light modes
+---
+
+<button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle color theme" title="Toggle color theme" type="button">
+  <!-- Sun Icon (shown in dark mode to switch to light) -->
+  <svg class="theme-icon sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle>
+    <line x1="12" y1="1" x2="12" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="23"></line>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line x1="1" y1="12" x2="3" y2="12"></line>
+    <line x1="21" y1="12" x2="23" y2="12"></line>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+  </svg>
+
+  <!-- Moon Icon (shown in light mode to switch to dark) -->
+  <svg class="theme-icon moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+<style>
+  .theme-toggle-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 10px;
+    background: var(--btn-secondary-bg);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+    touch-action: manipulation;
+  }
+
+  .theme-toggle-btn::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+  }
+
+  .theme-toggle-btn:hover {
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    background: var(--chip-cyan-bg);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-cyan);
+  }
+
+  .theme-icon {
+    position: absolute;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  }
+
+  /* Default Dark Mode: Sun icon visible, Moon icon hidden */
+  :global([data-theme="dark"]) .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: #fbbf24;
+  }
+
+  :global([data-theme="dark"]) .moon-icon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+  }
+
+  /* Light Mode: Moon icon visible, Sun icon hidden */
+  :global([data-theme="light"]) .sun-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+  }
+
+  :global([data-theme="light"]) .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: var(--accent-violet);
+  }
+</style>
+
+<script>
+  function setupThemeToggle() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      try {
+        localStorage.setItem('theme', newTheme);
+      } catch (err) {
+        console.warn('localStorage access denied for theme preference:', err);
+      }
+    });
+
+    // Listen for OS theme changes if user hasn't explicitly set a preference
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+      try {
+        if (!localStorage.getItem('theme')) {
+          document.documentElement.setAttribute('data-theme', e.matches ? 'light' : 'dark');
+        }
+      } catch (err) {
+        // ignore
+      }
+    });
+  }
+
+  // Run on initial load and after view transitions
+  setupThemeToggle();
+  document.addEventListener('astro:after-swap', setupThemeToggle);
+</script>

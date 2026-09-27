@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Education from '../components/Education.astro';
+import { personalInfo } from '../data/personalInfo';
+---
+
+<Layout
+  title={`Education & Certifications — ${personalInfo.name} | Android Developer`}
+  description="Academic credentials from University of Calcutta and specialized certifications in Jetpack Compose, Ktor, and Kotlin."
+>
+  <div class="subpage-wrapper">
+    <Education />
+  </div>
+</Layout>

@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Experience from '../components/Experience.astro';
+import { personalInfo } from '../data/personalInfo';
+---
+
+<Layout
+  title={`Experience — ${personalInfo.name} | Android Developer`}
+  description="Career timeline, roles, and engineering achievements across IIPROF Consultancy, Score Information, and Xellier Network Solutions."
+>
+  <div class="subpage-wrapper">
+    <Experience />
+  </div>
+</Layout>

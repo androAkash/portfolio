@@ -1,0 +1,138 @@
+---
+import { skillCategories } from '../data/skills';
+---
+
+<section id="skills" class="skills-section">
+  <div class="container">
+    <div class="section-header reveal-on-scroll">
+      <div class="section-label mono">// 03. TECHNICAL CAPABILITIES</div>
+      <h2 class="section-title">
+        Core Competencies & <span class="gradient-text">Tooling</span>
+      </h2>
+      <p class="section-subtitle">
+        Specialized in production-grade Android engineering, reactive architecture patterns, declarative UI rendering, and scalable backend integrations.
+      </p>
+    </div>
+
+    <!-- Skills Category Grid -->
+    <div class="skills-grid">
+      {skillCategories.map((cat) => (
+        <div class="skill-category-card glass-card reveal-on-scroll">
+          <div class="card-header">
+            <span class="category-code mono">[{cat.code}]</span>
+            <h3 class="category-title">{cat.title}</h3>
+          </div>
+
+          <div class="chips-list">
+            {cat.skills.map((skill) => (
+              <span class="skill-chip mono">
+                <span class="dot"></span>
+                <span>{skill}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-section {
+    position: relative;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 24px;
+  }
+
+  @media (max-width: 600px) {
+    .skills-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+  }
+
+  .skill-category-card {
+    padding: 28px 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+  }
+
+  @media (max-width: 480px) {
+    .skill-category-card {
+      padding: 20px 16px;
+      gap: 16px;
+    }
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--divider-color);
+  }
+
+  .category-code {
+    font-size: 0.75rem;
+    color: var(--accent-cyan);
+    font-weight: 700;
+  }
+
+  .category-title {
+    font-size: 1.12rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+    word-break: break-word;
+  }
+
+  .chips-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-chip {
+    font-size: 0.78rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--badge-bg);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-main);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+    touch-action: manipulation;
+    transition: all var(--transition-fast);
+  }
+
+  .skill-chip .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-violet-light);
+    transition: background var(--transition-fast);
+  }
+
+  .skill-chip:hover {
+    background: var(--chip-hover-bg);
+    border-color: var(--accent-cyan);
+    color: var(--chip-hover-text);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-cyan);
+  }
+
+  .skill-chip:hover .dot {
+    background: var(--accent-cyan);
+    box-shadow: 0 0 6px var(--accent-cyan);
+  }
+</style>

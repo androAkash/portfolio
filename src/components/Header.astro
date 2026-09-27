@@ -1,0 +1,474 @@
+---
+import { personalInfo } from '../data/personalInfo';
+import ThemeToggle from './ThemeToggle.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const homeHref = `${base}/` || '/';
+---
+
+<header class="site-header" id="site-header">
+  <div class="header-container">
+    <a href={homeHref} class="brand-logo" aria-label="Akash Bhattacharya Portfolio Home">
+      <div class="logo-box">
+        <span class="logo-code">&lt;AB/&gt;</span>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">
+          <span class="full-name">{personalInfo.name}</span>
+          <span class="short-name">Akash B.</span>
+        </span>
+        <span class="brand-role mono">Android Dev</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav" aria-label="Main Navigation">
+      <ul class="nav-list">
+        {personalInfo.navLinks.map((link) => {
+          const isLinkActive = currentPath === link.href || (link.href !== homeHref && currentPath.startsWith(link.href));
+          return (
+            <li>
+              <a href={link.href} class={`nav-link mono ${isLinkActive ? 'active' : ''}`}>{link.label}</a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <ThemeToggle />
+
+      <a href={personalInfo.resumeUrl} download="Akash_Bhattacharya_Resume.pdf" class="btn btn-secondary resume-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>Resume</span>
+      </a>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="drawer-content">
+      <ul class="mobile-nav-list">
+        <li>
+          <a href={homeHref} class={`mobile-nav-link mono ${currentPath === base || currentPath === `${base}/` || currentPath === '/' ? 'active' : ''}`}>// 00. home</a>
+        </li>
+        {personalInfo.navLinks.map((link) => {
+          const isLinkActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <li>
+              <a href={link.href} class={`mobile-nav-link mono ${isLinkActive ? 'active' : ''}`}>{link.label}</a>
+            </li>
+          );
+        })}
+      </ul>
+      <div class="mobile-drawer-cta">
+        <a href={personalInfo.resumeUrl} download="Akash_Bhattacharya_Resume.pdf" class="btn btn-primary w-full">
+          Download Resume (PDF)
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: var(--header-bg);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border-subtle);
+    z-index: 100;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .site-header.scrolled {
+    background: var(--header-scrolled-bg);
+    border-bottom-color: var(--border-bright);
+    box-shadow: var(--header-shadow);
+  }
+
+  .header-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .header-container {
+      padding: 0 1.25rem;
+      gap: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header-container {
+      padding: 0 1rem;
+      gap: 6px;
+    }
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-main);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 480px) {
+    .brand-logo {
+      gap: 8px;
+    }
+    .brand-role {
+      display: none;
+    }
+    .brand-name {
+      font-size: 0.92rem;
+    }
+    .logo-box {
+      width: 34px;
+      height: 34px;
+    }
+    .logo-code {
+      font-size: 0.78rem;
+    }
+  }
+
+  .logo-box {
+    width: 38px;
+    height: 38px;
+    background: var(--logo-box-bg);
+    border: 1px solid var(--border-bright);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--glow-violet);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .brand-logo:hover .logo-box {
+    transform: scale(1.05);
+    box-shadow: var(--glow-cyan);
+    border-color: var(--accent-cyan);
+  }
+
+  .logo-code {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--accent-cyan);
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-name {
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .short-name {
+    display: none;
+  }
+
+  @media (max-width: 400px) {
+    .full-name {
+      display: none;
+    }
+    .short-name {
+      display: inline;
+    }
+  }
+
+  .brand-role {
+    font-size: 0.72rem;
+    color: var(--accent-violet-light);
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  @media (min-width: 860px) {
+    .desktop-nav {
+      display: block;
+    }
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 28px;
+  }
+
+  .nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color var(--transition-fast), text-shadow var(--transition-fast);
+    position: relative;
+    padding: 6px 0;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    color: var(--text-main);
+  }
+
+  :global([data-theme="dark"]) .nav-link:hover,
+  :global([data-theme="dark"]) .nav-link.active {
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+  }
+
+  .nav-link.active {
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+
+  .nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-accent);
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--accent-cyan);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .header-actions {
+      gap: 8px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .header-actions {
+      gap: 5px;
+    }
+  }
+
+  .resume-btn {
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    touch-action: manipulation;
+  }
+
+  @media (max-width: 480px) {
+    .resume-btn {
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      min-height: 38px;
+      gap: 4px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .resume-btn {
+      padding: 6px 8px;
+      font-size: 0.74rem;
+    }
+    .resume-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .mobile-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 9px;
+    cursor: pointer;
+    z-index: 110;
+    touch-action: manipulation;
+    position: relative;
+  }
+
+  .mobile-toggle::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+  }
+
+  @media (min-width: 860px) {
+    .mobile-toggle {
+      display: none;
+    }
+  }
+
+  .bar {
+    width: 100%;
+    height: 2px;
+    background: var(--text-main);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-toggle.is-open .bar-1 {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .mobile-toggle.is-open .bar-2 {
+    opacity: 0;
+  }
+
+  .mobile-toggle.is-open .bar-3 {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Mobile Drawer */
+  .mobile-drawer {
+    display: block;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    height: 0;
+    background: var(--drawer-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    border-bottom: 1px solid transparent;
+  }
+
+  .mobile-drawer.is-open {
+    height: calc(100vh - var(--header-height));
+    border-bottom-color: var(--border-subtle);
+  }
+
+  @media (min-width: 860px) {
+    .mobile-drawer {
+      display: none !important;
+    }
+  }
+
+  .drawer-content {
+    padding: 24px 20px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mobile-nav-link {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--divider-color);
+    transition: color var(--transition-fast), padding-left var(--transition-fast);
+  }
+
+  .mobile-nav-link:hover, .mobile-nav-link.active {
+    color: var(--accent-cyan);
+    padding-left: 8px;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+</style>
+
+<script>
+  // Mobile drawer toggle
+  const toggleBtn = document.getElementById('mobile-menu-btn');
+  const drawer = document.getElementById('mobile-drawer');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+  const header = document.getElementById('site-header');
+
+  if (toggleBtn && drawer) {
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = drawer.classList.contains('is-open');
+      if (isOpen) {
+        drawer.classList.remove('is-open');
+        toggleBtn.classList.remove('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      } else {
+        drawer.classList.add('is-open');
+        toggleBtn.classList.add('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    mobileLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        drawer.classList.remove('is-open');
+        toggleBtn.classList.remove('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // Header scroll appearance
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 30) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
+  }, { passive: true });
+</script>

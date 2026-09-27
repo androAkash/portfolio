@@ -97,22 +97,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <div class="terminal-badge mono">Kotlin 2.0</div>
           </div>
           <div class="terminal-body mono">
-            <pre><code><span class="code-keyword">data class</span> <span class="code-type">MobileArchitect</span>(
-  <span class="code-param">val</span> name: <span class="code-type">String</span> = <span class="code-string">"{personalInfo.name}"</span>,
-  <span class="code-param">val</span> role: <span class="code-type">String</span> = <span class="code-string">"Android Application Developer"</span>,
-  <span class="code-param">val</span> stack: <span class="code-type">List</span>&lt;<span class="code-type">Tech</span>&gt; = <span class="code-func">listOf</span>(
-    <span class="code-string">"Kotlin"</span>, <span class="code-string">"Jetpack Compose"</span>,
-    <span class="code-string">"ExoPlayer"</span>, <span class="code-string">"Clean Architecture"</span>,
-    <span class="code-string">"GraphQL"</span>, <span class="code-string">"KMP"</span>
-  ),
-  <span class="code-param">val</span> location: <span class="code-type">String</span> = <span class="code-string">"Howrah, WB, India"</span>
-)
+            <pre><code><span class="code-keyword">data class</span> <span class="code-type">MobileArchitect</span><span class="code-punct">(</span>
+  <span class="code-keyword">val</span> <span class="code-prop">name</span>: <span class="code-type">String</span> <span class="code-punct">=</span> <span class="code-string">"{personalInfo.name}"</span><span class="code-punct">,</span>
+  <span class="code-keyword">val</span> <span class="code-prop">role</span>: <span class="code-type">String</span> <span class="code-punct">=</span> <span class="code-string">"Android Application Developer"</span><span class="code-punct">,</span>
+  <span class="code-keyword">val</span> <span class="code-prop">stack</span>: <span class="code-type">List</span><span class="code-punct">&lt;</span><span class="code-type">Tech</span><span class="code-punct">&gt;</span> <span class="code-punct">=</span> <span class="code-func">listOf</span><span class="code-punct">(</span>
+    <span class="code-string">"Kotlin"</span><span class="code-punct">,</span> <span class="code-string">"Jetpack Compose"</span><span class="code-punct">,</span>
+    <span class="code-string">"ExoPlayer"</span><span class="code-punct">,</span> <span class="code-string">"Clean Architecture"</span><span class="code-punct">,</span>
+    <span class="code-string">"GraphQL"</span><span class="code-punct">,</span> <span class="code-string">"KMP"</span>
+  <span class="code-punct">),</span>
+  <span class="code-keyword">val</span> <span class="code-prop">location</span>: <span class="code-type">String</span> <span class="code-punct">=</span> <span class="code-string">"Howrah, WB, India"</span>
+<span class="code-punct">)</span>
 
 <span class="code-annotation">@Composable</span>
-<span class="code-keyword">fun</span> <span class="code-func">EngineerApp</span>(): <span class="code-type">Result</span> &#123;
-  <span class="code-keyword">return</span> <span class="code-func">launch</span>(Dispatchers.Main) &#123;
-    deliverFluidUI(targetFps = <span class="code-number">60</span>)
-    reduceMemoryBoilerplate()
+<span class="code-keyword">fun</span> <span class="code-func">EngineerApp</span><span class="code-punct">()</span>: <span class="code-type">Result</span> &#123;
+  <span class="code-keyword">return</span> <span class="code-func">launch</span><span class="code-punct">(</span><span class="code-type">Dispatchers</span>.<span class="code-prop">Main</span><span class="code-punct">)</span> &#123;
+    <span class="code-func">deliverFluidUI</span><span class="code-punct">(</span><span class="code-param">targetFps</span> <span class="code-punct">=</span> <span class="code-number">60</span><span class="code-punct">)</span>
+    <span class="code-func">reduceMemoryBoilerplate</span><span class="code-punct">()</span>
   &#125;
 &#125;</code></pre>
           </div>
@@ -130,12 +130,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <style>
   .hero-section {
-    padding-top: calc(var(--header-height) + 50px);
+    padding-top: calc(var(--header-height) + 40px);
     padding-bottom: 70px;
-    min-height: 88vh;
+    min-height: calc(88vh - var(--header-height));
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     position: relative;
+  }
+
+  .hero-section .container {
+    margin-top: auto;
+    margin-bottom: auto;
   }
 
   @media (max-width: 768px) {
@@ -365,19 +371,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     width: 100%;
     max-width: 480px;
     border-radius: 14px;
-    background: var(--terminal-bg);
-    border: 1px solid var(--terminal-border);
-    box-shadow: var(--terminal-shadow);
+    background: #0d1117;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px -5px rgba(139, 92, 246, 0.2);
     overflow: hidden;
   }
 
   .terminal-header {
-    background: var(--terminal-header-bg);
+    background: #161b22;
     padding: 12px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid var(--terminal-border);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
   }
 
   .window-controls {
@@ -397,17 +403,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .terminal-title {
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: #94a3b8;
     font-weight: 500;
   }
 
   .terminal-badge {
     font-size: 0.68rem;
-    color: var(--accent-violet-light);
-    background: var(--chip-bg);
+    color: #c084fc;
+    background: rgba(168, 85, 247, 0.15);
     padding: 2px 8px;
     border-radius: 4px;
-    border: 1px solid var(--chip-border);
+    border: 1px solid rgba(168, 85, 247, 0.3);
   }
 
   .terminal-body {
@@ -416,24 +422,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     line-height: 1.55;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    background: #0d1117;
+    color: #e2e8f0;
   }
 
-  .terminal-body pre {
+  .terminal-body pre,
+  .terminal-body code {
     margin: 0;
+    color: #e2e8f0;
   }
 
   .code-keyword { color: #f43f5e; font-weight: 600; }
   .code-type { color: #38bdf8; }
+  .code-prop { color: #f1f5f9; }
   .code-param { color: #c084fc; }
   .code-string { color: #34d399; }
   .code-func { color: #fbbf24; }
   .code-annotation { color: #a78bfa; font-style: italic; }
   .code-number { color: #f97316; }
+  .code-punct { color: #94a3b8; }
 
   .terminal-footer {
     padding: 10px 20px;
-    background: var(--terminal-footer-bg);
-    border-top: 1px solid var(--terminal-border);
+    background: #090d14;
+    border-top: 1px solid rgba(139, 92, 246, 0.2);
   }
 
   .terminal-status {
@@ -441,7 +453,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     align-items: center;
     gap: 8px;
     font-size: 0.68rem;
-    color: var(--accent-cyan);
+    color: #38bdf8;
     letter-spacing: 0.05em;
   }
 
@@ -449,7 +461,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: var(--accent-cyan);
-    box-shadow: 0 0 6px var(--accent-cyan);
+    background-color: #38bdf8;
+    box-shadow: 0 0 6px #38bdf8;
   }
 </style>

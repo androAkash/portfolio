@@ -93,3 +93,13 @@ All notable changes and architectural decisions made by Antigravity will be docu
   - Verified local dev server responds with HTTP 200 on all 6 routes under `http://localhost:4321/portfolio/`.
 - **Why:**
   - Enable seamless, error-free GitHub Pages project site deployment at `https://androAkash.github.io/portfolio/`.
+
+## [2026-09-27] - Portfolio v1 Milestone: Scaffolding, Theming, Responsiveness & Deployment
+- **What Changed:**
+  - **Astro Setup & Core Foundation:** Scaffolded personal engineering portfolio for Akash Bhattacharya using Astro with Content Collections (`src/content/projects/*.md`), structured TypeScript data modules (`personalInfo`, `experience`, `skills`, `education`), and full multi-page architecture across 6 routes (`/`, `/projects`, `/experience`, `/skills`, `/education`, `/contact`). Populated with 100% authentic resume details, direct PDF resume download, and verified links.
+  - **Theme Toggle & Design System:** Implemented futuristic minimal design system with Vanilla CSS tokens, glassmorphism, glowing ambient orbs, and animated sun/moon Theme Toggle in navbar. Added inline FOUC prevention, `localStorage` persistence, and automatic OS system preference (`prefers-color-scheme`) detection.
+  - **Light-Theme Contrast & Token Audit:** Audited all components and templates to eliminate hardcoded colors, ensuring complete parity between `[data-theme="dark"]` and `[data-theme="light"]` with zero light-on-light or dark-on-dark contrast bugs, and luminous ambient elevation drops for light surfaces.
+  - **Mobile Responsiveness Fixes:** Engineered comprehensive responsive behavior across all viewports (from 320px ultra-compact mobile up through tablet and desktop). Built collapsible hamburger menu drawer with persistent Resume CTA button, fluid `clamp()` typography, tight mobile timeline layout, single-column grid collapsing with zero horizontal overflow, minimum 44px touch targets, consistent 1rem - 1.25rem container padding, and hidden decorative mockup below 768px (`display: none !important`) to prevent card overlaps.
+  - **GitHub Pages Configuration & Deployment:** Configured `site: 'https://androAkash.github.io'` and `base: '/portfolio'` in `astro.config.mjs`, prefixed all internal routes, assets, and canonical URLs with `import.meta.env.BASE_URL`, and configured automated CI/CD deployment via GitHub Actions (`.github/workflows/deploy.yml`) on push to `main`.
+- **Why:**
+  - Successfully complete, publish, and deploy the v1 production release of Akash Bhattacharya's mobile engineering portfolio live at `https://androakash.github.io/portfolio/`.

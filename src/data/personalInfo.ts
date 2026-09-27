@@ -22,7 +22,7 @@ export const personalInfo: PersonalInfo = {
   name: "Akash Bhattacharya",
   role: "Android Developer",
   specialty: "Kotlin & Jetpack Compose",
-  tagline: "Engineering high-performance Android applications, video playback systems, and modern reactive architectures with Kotlin & Jetpack Compose.",
+  tagline: "Engineering high-performance Android & Kotlin Multiplatform applications.",
   summary: "Mobile Application Developer with 3 years of experience specializing in Android development using Kotlin, Jetpack Compose, and modern architecture patterns (MVVM, Clean Architecture). Strong contributor to high-performance UI, real-time features, video playback systems, and scalable API integrations. Experienced in collaborating with cross-functional teams, writing maintainable code, and delivering optimized, user-centric mobile apps.",
   location: "Howrah, West Bengal, India",
   email: "akashbhattacharyak1314@gmail.com",

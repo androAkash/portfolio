@@ -1,36 +1,32 @@
-# Current Task: Portfolio v1 Release & Deployment
+# Current Task: Minimal Yet Informative Density Optimization
 
-## Status: v1 DEPLOYED
-The portfolio is deployed live at: **[https://androakash.github.io/portfolio/](https://androakash.github.io/portfolio/)**
+## Status: IN PROGRESS (Verification & Documentation)
 
-### Deployment Details
-- **Method:** Automated CI/CD via GitHub Actions (`.github/workflows/deploy.yml`) triggered on push to `main`.
-- **Target Repository:** `https://github.com/androAkash/portfolio.git`
-- **Hosting URL:** `https://androakash.github.io/portfolio/`
-- **Configuration:** `site: 'https://androAkash.github.io'`, `base: '/portfolio'` in `astro.config.mjs`.
+### Objectives Completed
+1. **Project Cards Progressive Disclosure:**
+   - Cards now display ONLY title, one-line description (first sentence of the markdown body), tech chips, links (`Source Code`, `Preview / Repo`), and a clean "Details →" toggle.
+   - Built an expandable `<details>` section within [ProjectCard.astro](file:///D:/Porfolio/src/components/ProjectCard.astro) revealing the full project overview, key architecture highlights, role, and metrics without page reloads.
+   - All markdown content in `src/content/projects/` is 100% preserved.
+2. **Experience Timeline Single-Line Accordion:**
+   - In [Experience.astro](file:///D:/Porfolio/src/components/Experience.astro), each role is now rendered as a single-line summary bar (`Role @ Company` | `Period +`).
+   - Clicking any role smoothly expands to reveal the full bullet highlights, role skills, and employment type badges.
+   - 100% of the resume bullet points and career details from `src/data/experience.ts` are preserved.
+3. **Skills Compact Chip Grid:**
+   - Removed verbose section subtitle.
+   - Rendered a compact, clean chip grid with labels only in [Skills.astro](file:///D:/Porfolio/src/components/Skills.astro), reducing vertical height by ~60%.
+4. **Whitespace & Typography:**
+   - Increased section padding to `110px` on desktop and `64px` on mobile for generous breathing space.
+   - Set `line-height: 1.75;` across body, paragraphs, and descriptions.
+   - Constrained prose to `max-width: 65ch;`.
+5. **Eliminated Repetitive Copy:**
+   - Removed redundant bio paragraph from Hero.
+   - Shortened tagline to one line: "Engineering high-performance Android & Kotlin Multiplatform applications."
+   - Trimmed verbose subtitles in Projects, Experience, Education, Hub directory, and Footer.
+6. **Hero Simplification:**
+   - One line tagline, name, role, and one primary CTA button (`View Projects →`) plus quick social icons.
+7. **Dual Themes & Responsiveness:**
+   - Full dark and light theme parity maintained using semantic CSS tokens.
+   - Fully responsive down to 320px with zero horizontal scroll and touch-friendly tap targets.
 
-### Current Working State
-- **Architecture & Framework:** Astro v5+ static multi-page architecture with 6 distinct routes (`/`, `/projects`, `/experience`, `/skills`, `/education`, `/contact`).
-- **Content System:** Astro Content Collections (`src/content/projects/*.md`) for dynamic, schema-validated project publishing without editing component layouts.
-- **Theme & Styling:**
-  - Dual theme architecture powered 100% by CSS custom properties (`[data-theme="dark"]` and `[data-theme="light"]`).
-  - Dark mode by default (`#0a0a0f`) with electric violet and cyan neon accents.
-  - Light mode with high-contrast slate text (`#0f172a`), crisp white card surfaces, and soft ambient elevation shadows.
-  - Theme toggle button in header with `localStorage` persistence and OS preference detection (`prefers-color-scheme`).
-- **Mobile Responsiveness & Usability:**
-  - Fully responsive from ultra-compact 320px up through 375px, 414px, 768px tablet, and 1440px desktop.
-  - Hamburger drawer navigation with persistent Resume CTA button across all breakpoints.
-  - Strict minimum 44px tap targets for buttons, toggles, form fields, and navigation links.
-  - Consistent 1rem – 1.25rem container padding preventing any edge clipping or content collision.
-  - Decorative phone mockup displayed on desktop and hidden below 768px (`display: none !important`) to eliminate mobile card overlap.
-  - Zero horizontal overflow (`overflow-x: hidden`) across all routes and devices.
-- **Data Integrity:** Populated with 100% authentic career details, email (`akashbhattacharyak1314@gmail.com`), phone (`+91 8240285810`), education, certifications, and GitHub/LinkedIn profiles of Akash Bhattacharya.
-- **Build Status:** Static build compiles cleanly in ~1.4s with 0 errors; all static assets and routes correctly scoped with `/portfolio/`.
-
-### Next Ideas (Backlog & Future Enhancements)
-- [ ] Add blog / technical articles collection under `/blog` for Android & Kotlin architecture deep-dives.
-- [ ] Integrate interactive Jetpack Compose web demo (via Compose Multiplatform for Web / Wasm) inside project detail modals.
-- [ ] Implement client-side search/filter on `/projects` by technology tags (e.g. Kotlin, Jetpack Compose, KMP, ExoPlayer).
-- [ ] Connect the contact form to a serverless backend service or Formspree / Web3Forms endpoint for direct in-browser submissions.
-- [ ] Add open-graph dynamic image generator (`@astrojs/og` or Satori) for rich social link preview cards.
-- [ ] Implement analytics (e.g., privacy-focused Cloudflare Web Analytics or Plausible).
+### Build Verification
+- Static production build `npm run build` succeeds in ~1.35s with 0 errors across all 6 routes.

@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import ProjectCard from './ProjectCard.astro';
 
 // Fetch all project markdown entries from src/content/projects/
@@ -11,6 +11,29 @@ const sortedProjects = rawProjects.sort((a, b) => {
   const orderB = b.data.order ?? 99;
   return orderA - orderB;
 });
+
+function getFirstSentence(markdown: string): string {
+  const withoutHeadings = markdown.replace(/^#+\s+.*$/gm, '').trim();
+  const clean = withoutHeadings.replace(/[*_`]/g, '').trim();
+  const match = clean.match(/^([^.!?\n]+[.!?])/);
+  if (match) {
+    return match[1].trim();
+  }
+  const firstLine = clean.split('\n').map(l => l.trim()).filter(Boolean)[0];
+  return firstLine || '';
+}
+
+const renderedProjects = await Promise.all(
+  sortedProjects.map(async (project) => {
+    const { Content } = await render(project);
+    const oneLine = getFirstSentence(project.body || '');
+    return {
+      project,
+      Content,
+      oneLine,
+    };
+  })
+);
 ---
 
 <section id="projects" class="projects-section">
@@ -21,37 +44,39 @@ const sortedProjects = rawProjects.sort((a, b) => {
         Engineered for <span class="gradient-text">Performance & Scale</span>
       </h2>
       <p class="section-subtitle">
-        Selected Android and multiplatform projects demonstrating custom UI canvas rendering, low-latency video streaming, and reactive data flow. Powered by Astro Content Collections.
+        Selected Android and multiplatform applications built with Kotlin and Jetpack Compose.
       </p>
     </div>
 
     <!-- Project Cards Grid -->
     <div class="projects-grid">
-      {sortedProjects.map((project) => (
+      {renderedProjects.map(({ project, Content, oneLine }) => (
         <ProjectCard
           title={project.data.title}
           year={project.data.year}
-          description={project.data.description}
+          oneLineDescription={oneLine}
           tags={project.data.tags}
           github={project.data.github}
           demo={project.data.demo}
           metrics={project.data.metrics}
           role={project.data.role}
-        />
+        >
+          <Content />
+        </ProjectCard>
       ))}
     </div>
 
     <!-- Information callout on how Content Collections work -->
     <div class="content-collection-callout glass-card reveal-on-scroll">
       <div class="callout-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="4 17 10 11 4 5"></polyline>
           <line x1="12" y1="19" x2="20" y2="19"></line>
         </svg>
       </div>
       <div class="callout-text">
-        <span class="callout-heading mono">Modular Content Architecture:</span>
-        <span class="callout-body">Projects are fed directly from Markdown files inside <code>src/content/projects/</code>. New projects can be published simply by dropping in a new <code>.md</code> file without touching layout code.</span>
+        <span class="callout-heading mono">Modular Architecture:</span>
+        <span class="callout-body">Projects loaded directly from Markdown content collections in <code>src/content/projects/</code>.</span>
       </div>
     </div>
 

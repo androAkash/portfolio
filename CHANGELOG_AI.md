@@ -103,3 +103,15 @@ All notable changes and architectural decisions made by Antigravity will be docu
   - **GitHub Pages Configuration & Deployment:** Configured `site: 'https://androAkash.github.io'` and `base: '/portfolio'` in `astro.config.mjs`, prefixed all internal routes, assets, and canonical URLs with `import.meta.env.BASE_URL`, and configured automated CI/CD deployment via GitHub Actions (`.github/workflows/deploy.yml`) on push to `main`.
 - **Why:**
   - Successfully complete, publish, and deploy the v1 production release of Akash Bhattacharya's mobile engineering portfolio live at `https://androakash.github.io/portfolio/`.
+
+## [2026-09-27] - Minimal Yet Informative Density Optimization
+- **What Changed:**
+  - **Project Cards Progressive Disclosure:** Refactored `ProjectCard.astro` and `Projects.astro` so project cards initially display ONLY title, one-line description (exact first sentence extracted dynamically from the markdown body), tech chips, action links (`Source Code`, `Preview / Repo`), and a clean "Details →" toggle button. Clicking "Details →" opens a collapsible drawer containing full markdown content, role, and metrics without any layout jumps. Zero content deleted from `src/content/projects/*.md`.
+  - **Experience Timeline One-Line Accordion:** Re-architected `Experience.astro` into accessible `<details>` single-line summary rows (`Role @ Company` on left, `Period` + animated `+` indicator on right). Expanding any role reveals the complete bullet highlights list, employment type, and role skills. 100% of resume details in `src/data/experience.ts` preserved.
+  - **Skills Compact Chip Grid:** Streamlined `Skills.astro` into a compact monospace chip grid with category headers and tags only. Removed the verbose repetitive subtitle.
+  - **Whitespace & Typography:** Increased section padding to `110px` on desktop and `64px` on mobile, increased line-height to `1.75` across body and prose, and constrained prose elements to `max-width: 65ch;`.
+  - **Verbose Copy Elimination:** Removed the repetitive bio paragraph from Hero (which re-stated Clean Architecture, ExoPlayer, and 60fps), trimmed tagline to one line max ("Engineering high-performance Android & Kotlin Multiplatform applications."), tightened hub directory cards in `index.astro` to 1 sentence each, and trimmed subtitles across Projects, Experience, Education, and Footer.
+  - **Hero Simplification:** Streamlined Hero to name + role + 1-line tagline + single primary CTA button (`View Projects →`) alongside compact social links.
+  - **Theming & Responsiveness Verification:** Preserved complete CSS variable integration across dark and light themes, and guaranteed zero horizontal overflow across all viewports down to 320px.
+- **Why:**
+  - Satisfy user request to make the site minimal yet informative, enabling visitors to scan the whole page in 20 seconds while keeping full details accessible one click away without deleting any content.

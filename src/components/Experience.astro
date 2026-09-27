@@ -10,7 +10,7 @@ import { experienceList } from '../data/experience';
         Professional <span class="gradient-text">Experience</span>
       </h2>
       <p class="section-subtitle">
-        3+ years of professional Android and multiplatform mobile development spanning remote product development, fintech payments, clean architecture migration, and multimedia systems.
+        3+ years engineering production Android and multiplatform products.
       </p>
     </div>
 
@@ -26,39 +26,44 @@ import { experienceList } from '../data/experience';
               <div class={`marker-dot ${item.current ? 'current-pulse' : ''}`}></div>
             </div>
 
-            <!-- Content Card -->
-            <div class="timeline-content glass-card">
-              <div class="timeline-header">
-                <div class="role-company">
+            <!-- Expandable One-Line Role Accordion -->
+            <details class="experience-card glass-card">
+              <summary class="role-summary">
+                <div class="summary-left">
                   <h3 class="role-title">{item.role}</h3>
-                  <div class="company-row">
-                    <span class="company-name">{item.company}</span>
-                    <span class="bullet-sep">•</span>
-                    <span class="location-badge mono">{item.type}</span>
-                  </div>
+                  <span class="role-at mono">@</span>
+                  <span class="company-name">{item.company}</span>
                 </div>
-                <div class="period-badge mono">
-                  {item.period}
+
+                <div class="summary-right">
+                  <span class="period-badge mono">{item.period}</span>
+                  <span class="expand-icon mono" aria-hidden="true">+</span>
+                </div>
+              </summary>
+
+              <div class="role-expanded-content">
+                <div class="role-meta-strip">
+                  <span class="location-badge mono">{item.type}</span>
+                </div>
+
+                <!-- Highlights list from resume -->
+                <ul class="highlights-list">
+                  {item.highlights.map((point) => (
+                    <li class="highlight-item">
+                      <span class="chevron-bullet">▹</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <!-- Skills tags used in this role -->
+                <div class="role-skills">
+                  {item.skills.map((skill) => (
+                    <span class="chip cyan">{skill}</span>
+                  ))}
                 </div>
               </div>
-
-              <!-- Highlights list from resume -->
-              <ul class="highlights-list">
-                {item.highlights.map((point) => (
-                  <li class="highlight-item">
-                    <span class="chevron-bullet">▹</span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <!-- Skills tags used in this role -->
-              <div class="role-skills">
-                {item.skills.map((skill) => (
-                  <span class="chip cyan">{skill}</span>
-                ))}
-              </div>
-            </div>
+            </details>
           </div>
         ))}
       </div>
@@ -90,13 +95,13 @@ import { experienceList } from '../data/experience';
   .timeline-list {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 24px;
   }
 
   .timeline-item {
     position: relative;
     display: flex;
-    gap: 36px;
+    gap: 28px;
     align-items: flex-start;
   }
 
@@ -104,7 +109,7 @@ import { experienceList } from '../data/experience';
     position: relative;
     z-index: 2;
     width: 42px;
-    height: 42px;
+    height: 52px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -122,9 +127,9 @@ import { experienceList } from '../data/experience';
   }
 
   .timeline-item:hover .marker-dot {
-    transform: scale(1.3);
+    transform: scale(1.25);
     border-color: var(--accent-violet);
-    box-shadow: 0 0 20px var(--accent-cyan);
+    box-shadow: 0 0 18px var(--accent-cyan);
   }
 
   .current-pulse {
@@ -139,83 +144,149 @@ import { experienceList } from '../data/experience';
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
   }
 
-  .timeline-content {
+  /* Expandable One-Line Role Card */
+  .experience-card {
     flex-grow: 1;
-    padding: 30px;
-    border-radius: 16px;
+    border-radius: 14px;
+    transition: all var(--transition-smooth);
+    border: 1px solid var(--border-subtle);
   }
 
-  .timeline-header {
+  .experience-card:hover {
+    border-color: var(--border-bright);
+    background: var(--bg-card-hover);
+  }
+
+  .role-summary {
+    padding: 16px 22px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 16px;
-    margin-bottom: 20px;
+    cursor: pointer;
+    user-select: none;
+    min-height: 52px;
+  }
+
+  .summary-left {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
     flex-wrap: wrap;
   }
 
   .role-title {
-    font-size: 1.28rem;
+    font-size: 1.08rem;
     font-weight: 700;
     color: var(--text-main);
     letter-spacing: -0.01em;
-    margin-bottom: 6px;
   }
 
-  .company-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .role-at {
+    color: var(--accent-cyan);
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .company-name {
     font-size: 0.95rem;
     color: var(--accent-violet-light);
-    font-weight: 500;
+    font-weight: 600;
   }
 
-  .bullet-sep {
-    color: var(--text-dim);
+  .summary-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  .period-badge {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    background: var(--badge-cyan-bg);
+    border: 1px solid var(--chip-cyan-border);
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .expand-icon {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    transition: transform var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--badge-bg);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .experience-card[open] .expand-icon {
+    transform: rotate(45deg);
+    color: var(--accent-violet-light);
+    border-color: var(--border-bright);
+  }
+
+  .role-expanded-content {
+    padding: 0 22px 22px 22px;
+    border-top: 1px dashed var(--divider-color);
+    margin-top: 2px;
+    padding-top: 16px;
+    animation: expandFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes expandFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .role-meta-strip {
+    margin-bottom: 14px;
   }
 
   .location-badge {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    font-size: 0.72rem;
+    color: var(--text-dim);
     background: var(--badge-bg);
     padding: 2px 8px;
     border-radius: 4px;
     border: 1px solid var(--badge-border);
   }
 
-  .period-badge {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--accent-cyan);
-    background: var(--badge-cyan-bg);
-    border: 1px solid var(--chip-cyan-border);
-    padding: 4px 12px;
-    border-radius: 6px;
-    white-space: nowrap;
-  }
-
   .highlights-list {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 24px;
+    gap: 10px;
+    margin-bottom: 20px;
   }
 
   .highlight-item {
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: 1.65;
+    max-width: 65ch;
   }
 
   .chevron-bullet {
     color: var(--accent-violet);
     font-size: 0.85rem;
-    line-height: 1.6;
+    line-height: 1.65;
     flex-shrink: 0;
   }
 
@@ -223,7 +294,7 @@ import { experienceList } from '../data/experience';
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    padding-top: 18px;
+    padding-top: 16px;
     border-top: 1px solid var(--divider-color);
   }
 
@@ -234,47 +305,52 @@ import { experienceList } from '../data/experience';
       bottom: 14px;
     }
     .timeline-list {
-      gap: 28px;
+      gap: 18px;
     }
     .timeline-item {
       gap: 12px;
     }
     .timeline-marker {
       width: 22px;
-      height: 22px;
+      height: 48px;
     }
     .marker-dot {
       width: 10px;
       height: 10px;
       border-width: 2px;
     }
-    .timeline-content {
-      padding: 18px 16px;
-      border-radius: 14px;
+    .role-summary {
+      padding: 12px 14px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-    .timeline-header {
-      margin-bottom: 14px;
-      gap: 10px;
+    .summary-left {
+      gap: 4px 6px;
+      width: 100%;
     }
     .role-title {
-      font-size: 1.1rem;
-      word-break: break-word;
+      font-size: 0.98rem;
     }
-    .company-row {
+    .company-name {
       font-size: 0.88rem;
-      flex-wrap: wrap;
-      gap: 4px 6px;
+    }
+    .summary-right {
+      width: 100%;
+      justify-content: space-between;
     }
     .period-badge {
       font-size: 0.72rem;
-      padding: 3px 8px;
+      padding: 2px 8px;
+    }
+    .role-expanded-content {
+      padding: 12px 14px 16px 14px;
     }
     .highlight-item {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       gap: 8px;
     }
     .role-skills {
-      padding-top: 14px;
+      padding-top: 12px;
       gap: 6px;
     }
   }
@@ -288,17 +364,14 @@ import { experienceList } from '../data/experience';
     }
     .timeline-marker {
       width: 16px;
-      height: 16px;
+      height: 44px;
     }
     .marker-dot {
       width: 8px;
       height: 8px;
     }
-    .timeline-content {
-      padding: 14px 12px;
-    }
     .role-title {
-      font-size: 1.02rem;
+      font-size: 0.92rem;
     }
   }
 </style>

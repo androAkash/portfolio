@@ -34,7 +34,7 @@ export const personalInfo: PersonalInfo = {
     linkedin: "https://www.linkedin.com/in/akash-bhattacharya-b343bb1aa/",
     emailMailto: "mailto:akashbhattacharyak1314@gmail.com",
   },
-  resumeUrl: `${import.meta.env.BASE_URL.replace(/\/$/, '')}/resume.pdf`,
+  resumeUrl: `${import.meta.env.BASE_URL.replace(/\/$/, '')}/Akash_Bhattacharya_Android_Dev_CV.pdf`,
   navLinks: [
     { label: "// 01. projects", href: `${import.meta.env.BASE_URL.replace(/\/$/, '')}/projects` },
     { label: "// 02. experience", href: `${import.meta.env.BASE_URL.replace(/\/$/, '')}/experience` },
